@@ -328,8 +328,8 @@ class Govs {
   factory Govs.fromJson(Map<String, dynamic> json) => Govs(
         id: json["id"],
         name: json["name"],
-        createdAt: json["created_at"],
-        updatedAt: json["updated_at"],
+        createdAt: json["created_at"] ?? "",
+        updatedAt: json["updated_at"] ?? "",
       );
 
   Map<String, dynamic> toJson() => {

@@ -92,12 +92,6 @@ class PackageSelection extends StatelessWidget {
           hint: const Text('اختر الباقة'),
           value: selectedPackage,
           onChanged: onPackageSelected,
-
-          //  (newValue) {
-          //   setState(() {
-          //     selectedPackage = newValue;
-          //   });
-          // },
           items: package.package.map((package) {
             return DropdownMenuItem<PackageElement>(
               value: package,

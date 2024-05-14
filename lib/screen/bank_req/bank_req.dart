@@ -1,5 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api, avoid_print
 
+//////////////////! deprecated (use BankReq2 instead)
+
 import 'package:aman/const.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';

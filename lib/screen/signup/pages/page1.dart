@@ -1,5 +1,7 @@
 import 'package:aman/functions/validator.dart';
+import 'package:aman/models/cus.dart';
 import 'package:aman/models/packages.dart';
+import 'package:aman/widgets/custom_drop_down_type.dart';
 import 'package:aman/widgets/dropdown.dart';
 import 'package:aman/widgets/file_picker.dart';
 import 'package:aman/widgets/general_button.dart';
@@ -21,9 +23,9 @@ class SingUpPage1 extends StatelessWidget {
     required this.phoneNumberController,
     required this.nearestPointController,
   });
-  final List<String> govenorates;
-  final String? selectedGovernorate;
-  final void Function(String?) onGovernorateChanged;
+  final List<Govs> govenorates;
+  final Govs? selectedGovernorate;
+  final void Function(Govs?) onGovernorateChanged;
 
   final Package package;
   final void Function() onNextTap;
@@ -75,12 +77,13 @@ class SingUpPage1 extends StatelessWidget {
               keyboardType: TextInputType.phone,
             ),
             const SizedBox(height: 10),
-            CustomDropdown(
-                items: govenorates,
-                hintText: 'اختر المحافظة',
-                selectedValue:
-                    selectedGovernorate, // Pass your selected value here
-                onChanged: onGovernorateChanged),
+            CustomDropdownType<Govs>(
+              items: govenorates,
+              hintText: 'اختر المحافظة',
+              selectedValue:
+                  selectedGovernorate, // Pass your selected value here
+              onChanged: onGovernorateChanged,
+            ),
             const SizedBox(height: 10),
             CustomTextField(
               controller: nearestPointController,

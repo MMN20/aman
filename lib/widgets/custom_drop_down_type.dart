@@ -3,13 +3,13 @@
 import 'package:aman/const.dart';
 import 'package:flutter/material.dart';
 
-class CustomDropdown extends StatefulWidget {
-  final List<String> items;
+class CustomDropdownType<T> extends StatefulWidget {
+  final List<T> items;
   final String hintText;
-  final String? selectedValue;
-  final void Function(String?) onChanged;
+  final T? selectedValue;
+  final void Function(T?) onChanged;
 
-  const CustomDropdown({
+  const CustomDropdownType({
     Key? key,
     required this.items,
     required this.hintText,
@@ -18,11 +18,11 @@ class CustomDropdown extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _CustomDropdownState createState() => _CustomDropdownState();
+  _CustomDropdownTypeState<T> createState() => _CustomDropdownTypeState<T>();
 }
 
-class _CustomDropdownState extends State<CustomDropdown> {
-  String? _selectedValue;
+class _CustomDropdownTypeState<T> extends State<CustomDropdownType<T>> {
+  T? _selectedValue;
 
   @override
   void initState() {
@@ -32,7 +32,8 @@ class _CustomDropdownState extends State<CustomDropdown> {
 
   @override
   Widget build(BuildContext context) {
-    return DropdownButtonFormField<String>(
+    print(_selectedValue.runtimeType);
+    return DropdownButtonFormField<T>(
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20),
@@ -46,9 +47,11 @@ class _CustomDropdownState extends State<CustomDropdown> {
       value: _selectedValue,
       hint: Text(widget.hintText),
       items: widget.items.map((item) {
-        return DropdownMenuItem<String>(
+        dynamic s = item;
+        String name = s.name;
+        return DropdownMenuItem<T>(
           value: item,
-          child: Text(item),
+          child: Text(name),
         );
       }).toList(),
       onChanged: (newValue) {

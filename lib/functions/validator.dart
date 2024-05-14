@@ -5,7 +5,7 @@ String? validator(
   String minMessage,
   String maxMessage, [
   bool canBeEmpty = false,
-  String emptyMessage = "Can't be empty",
+  String emptyMessage = "يرجى ملئ الحقل",
 ]) {
   // if it can't be empty
   if (s.isEmpty && !canBeEmpty) {

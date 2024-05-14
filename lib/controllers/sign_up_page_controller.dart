@@ -1,4 +1,8 @@
+import 'dart:convert';
 import 'dart:io';
+import 'package:aman/api/api.dart';
+import 'package:aman/api/api_links.dart';
+import 'package:aman/models/cus.dart';
 import 'package:aman/models/packages.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -6,11 +10,13 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 class SignUpPageController extends GetxController {
-  // page1 validation
-  TextEditingController nameController = TextEditingController();
-  TextEditingController phoneNumberController = TextEditingController();
-  String? selectedGovernorate;
-  TextEditingController nearestPointController = TextEditingController();
+  //! page1 validation
+  TextEditingController nameController = TextEditingController(text: "ششش");
+  TextEditingController phoneNumberController =
+      TextEditingController(text: "07501234567");
+  Govs? selectedGovernorate;
+  TextEditingController nearestPointController =
+      TextEditingController(text: "ششش");
   GlobalKey<FormState> page1Key = GlobalKey<FormState>();
 
   // give it the phone number and it will return it with the key
@@ -30,14 +36,28 @@ class SignUpPageController extends GetxController {
     return true;
   }
 
-  // page2 validation
-  TextEditingController jobController = TextEditingController();
-  TextEditingController jobYearsController = TextEditingController();
-  TextEditingController jobLocationController = TextEditingController();
-  TextEditingController jobProviderNameController = TextEditingController();
+  //! page2 validation
+  TextEditingController jobController = TextEditingController(text: "ششش");
+  TextEditingController jobYearsController = TextEditingController(text: "12");
+  TextEditingController jobLocationController =
+      TextEditingController(text: "ششش");
+  TextEditingController jobProviderNameController =
+      TextEditingController(text: "ششش");
   String? selectedSector;
   GlobalKey<FormState> page2Key = GlobalKey<FormState>();
 
+  //! page3 validation
+  List<File>? pickedFiles;
+  // the list of packages
+  Package? package;
+  bool isInit = false;
+  // for the package selector
+  PackageElement? selectedPackage;
+  // if false then do not show the files (they are not images)
+  bool? canShowImages;
+  bool isPage3Loading = false;
+
+  static const String _validationMessage = "الرجاء ملئ جميع الحقول المطلوبة";
   bool validatePage2() {
     if (!page2Key.currentState!.validate() || selectedSector == null) {
       return false;
@@ -46,57 +66,130 @@ class SignUpPageController extends GetxController {
     return true;
   }
 
+  bool validatePage3() {
+    if (selectedPackage != null && pickedFiles != null) {
+      return true;
+    }
+    return false;
+  }
+
+  Future postWithFiles(
+      Map<String, String> data, List<File> files, String url) async {
+    http.MultipartRequest multipartRequest =
+        http.MultipartRequest("POST", Uri.parse(url));
+
+    if (files.isNotEmpty) {
+      for (File file in files) {
+        http.MultipartFile multipartFile =
+            await http.MultipartFile.fromPath('imgs[]', file.path);
+        multipartRequest.files.add(multipartFile);
+      }
+    }
+
+    multipartRequest.fields.addAll(data);
+
+    try {
+      http.StreamedResponse streamedResponse = await multipartRequest.send();
+      http.Response response = await http.Response.fromStream(streamedResponse);
+      print(response.statusCode);
+      print(response.body);
+      if (response.statusCode == 200 ||
+          response.statusCode == 201 ||
+          response.statusCode == 302) {
+        return "success";
+      } else {
+        print(response.body);
+        return "error";
+      }
+    } catch (e) {
+      print(e.toString());
+      return "error";
+    }
+  }
+
+  Map<String, String> getSubmitData() {
+    // page1
+    String name = nameController.text;
+    String phone = phoneNumberController.text;
+    String govID = selectedGovernorate!.id.toString();
+    String nearestPoint = nearestPointController.text;
+
+    // page2
+    String job = jobController.text;
+    String jobYears = jobYearsController.text;
+    String jobLocation = jobLocationController.text;
+    // اسم جهة العمل
+    String jobProviderLocation = jobProviderNameController.text;
+    String selectedSector = this.selectedSector!;
+
+    // page3
+    String selectedPackagID = selectedPackage!.id.toString();
+
+    return {
+      'name': name,
+      'phone': phone,
+      'gov_id': govID,
+      'point': nearestPoint,
+      'work_section': selectedSector,
+      'job': job,
+      'work_years': jobYears,
+      'work_place': jobLocation,
+      'work_place_name': jobProviderLocation,
+      'package_id': selectedPackagID
+    };
+  }
+
+  void submitForm() async {
+    if (validatePage3()) {
+      isPage3Loading = true;
+      update();
+
+      Map<String, String> data = getSubmitData();
+
+      dynamic res =
+          await postWithFiles(data, pickedFiles!, ApiLinks.submitCusRegForm);
+      if (res == "success") {
+        ScaffoldMessenger.of(context!)
+            .showSnackBar(const SnackBar(content: Text("تم حفظ الطلب بنجاح!")));
+        Navigator.of(context!).pop();
+      } else {
+        print(
+            "Failed======================================================123871623987126389712398172369812736");
+      }
+    } else {
+      ScaffoldMessenger.of(context!).showSnackBar(
+        const SnackBar(
+          content: Text(_validationMessage),
+        ),
+      );
+    }
+    isPage3Loading = false;
+    update();
+  }
+
   BuildContext? context;
 
   PageController pageController = PageController();
-  List<File>? pickedFiles;
 
-  List<String> govenorates = const [
-    "بغداد",
-    "نينوى",
-    "البصرة",
-    "صلاح الدين",
-    "دهوك",
-    "أربيل",
-    "السليمانية",
-    "ديالى",
-    "واسط",
-    "ميسان",
-    "ذي قار",
-    "المثنى",
-    "بابل",
-    "كربلاء",
-    "النجف",
-    "الانبار",
-    "الديوانية",
-    "كركوك",
-    "حلبجة"
-  ];
+  List<Govs> govenorates = const [];
 
   List<String> sectors = const ["قطاع خاص", "حكومي"];
-
-  // the list of packages
-  Package? package;
-  bool isPackagesInit = false;
-
-  // for the package selector
-  PackageElement? selectedPackage;
 
   int currentPage = 0;
 
   void goToNextPage() {
     if (currentPage == 0 && !validatePage1()) {
       if (context != null) {
-        ScaffoldMessenger.of(context!).showSnackBar(
-            const SnackBar(content: Text("الرجاء ملئ جميع الحقول")));
+        ScaffoldMessenger.of(context!)
+            .showSnackBar(const SnackBar(content: Text(_validationMessage)));
       }
       return;
     }
 
     if (currentPage == 1 && !validatePage2()) {
       if (context != null) {
-        ScaffoldMessenger.of(context!).showSnackBar(
-            const SnackBar(content: Text("الرجاء ملئ جميع الحقول")));
+        ScaffoldMessenger.of(context!)
+            .showSnackBar(const SnackBar(content: Text(_validationMessage)));
       }
       return;
     }
@@ -117,7 +210,9 @@ class SignUpPageController extends GetxController {
     }
   }
 
-  void onGovernorateChanged(String? newVal) {
+  void onGovernorateChanged(Govs? newVal) {
+    print(newVal?.id);
+    print(newVal?.name);
     selectedGovernorate = newVal;
   }
 
@@ -143,11 +238,44 @@ class SignUpPageController extends GetxController {
     update();
   }
 
-  void initPackages() async {
+  Future<void> initPackages() async {
     Package result = await fetchPackages();
+    print(result.package[0].id);
     package = result;
-    isPackagesInit = true;
-    update();
+  }
+
+  Future<void> initGovs() async {
+    Api api = Api();
+    http.Response response = await api.getData(ApiLinks.allGovsApi);
+    List apiGovs = [];
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      apiGovs = jsonDecode(response.body);
+      print(apiGovs);
+      govenorates = List<Govs>.generate(
+          apiGovs.length, (index) => Govs.fromJson(apiGovs[index]));
+      isInit = true;
+      update();
+    } else {
+      ScaffoldMessenger.of(context!).showSnackBar(
+        const SnackBar(
+          content: Text("هنالك مشكلة في الاتصال!"),
+        ),
+      );
+    }
+  }
+
+  void initAllData() async {
+    await initPackages();
+    initGovs();
+  }
+
+  bool isFileAImage(String filePath) {
+    List<String> name = filePath.split(".");
+    String ext = name.last;
+    if (ext != 'jpg' && ext != 'png' && ext != 'jpeg') {
+      return false;
+    }
+    return true;
   }
 
   //! for picking the files
@@ -162,13 +290,21 @@ class SignUpPageController extends GetxController {
           'docx',
           'jpg',
           'png',
-          'html'
+          'html',
+          'jpeg'
         ], // Example file types
       );
 
       if (result != null) {
         pickedFiles = List.generate(
             result.paths.length, (index) => File(result.paths[index]!));
+        canShowImages = true;
+        for (File f in pickedFiles!) {
+          if (!isFileAImage(f.path)) {
+            canShowImages = false;
+            break;
+          }
+        }
         update();
       }
     } catch (e) {
@@ -194,7 +330,7 @@ class SignUpPageController extends GetxController {
 
   @override
   void onInit() {
-    initPackages();
+    initAllData();
     super.onInit();
   }
 }

@@ -27,7 +27,7 @@ class _SignUpState extends State<SignUp> {
   Widget build(BuildContext context) {
     final controller = Get.put(SignUpPageController());
     controller.context = context;
-    controller.currentPage = 0;
+    // controller.currentPage = 0;
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -63,7 +63,7 @@ class _SignUpState extends State<SignUp> {
                       ],
                     ),
                     Expanded(
-                      child: controller.isPackagesInit
+                      child: controller.isInit
                           ? PageView(
                               physics: const NeverScrollableScrollPhysics(),
                               onPageChanged: (value) {
@@ -105,9 +105,12 @@ class _SignUpState extends State<SignUp> {
                                   onPackageSelected:
                                       controller.onPackageSelected,
                                   package: controller.package!,
+                                  onSubmit: controller.submitForm,
                                   selectedPackage: controller.selectedPackage,
                                   pickedFiles: controller.pickedFiles,
                                   onPickFiles: controller.onPickFiles,
+                                  canShowImages: controller.canShowImages,
+                                  isPage3Loading: controller.isPage3Loading,
                                 )
                               ],
                             )
