@@ -21,7 +21,8 @@ void main() {
         debugShowCheckedModeBanner: false,
         title: '',
         theme: ThemeData(
-            appBarTheme: const AppBarTheme(backgroundColor: kPrimarycolor),
+            appBarTheme: const AppBarTheme(
+                backgroundColor: kPrimarycolor, centerTitle: true),
             fontFamily: 'Almarai',
             primaryColor: kPrimarycolor,
             textTheme: GoogleFonts.cairoTextTheme(),

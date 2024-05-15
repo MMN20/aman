@@ -1,4 +1,7 @@
 import 'package:aman/const.dart';
+import 'package:aman/screen/insu_req/insu_req.dart';
+import 'package:aman/screen/low_req/law_req_page.dart';
+import 'package:aman/widgets/general_button.dart';
 import 'package:flutter/material.dart';
 
 class LowService extends StatelessWidget {
@@ -62,16 +65,26 @@ class LowService extends StatelessWidget {
                 const SizedBox(
                   height: 80,
                 ),
-                ElevatedButton(
-                  onPressed: () {},
+                GeneralButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return const LawReqPage();
+                          // return const BankReqForm();
+                        },
+                      ),
+                    );
+                  },
                   child: const Text(
-                    "لطلب الخدمة يرجى ملاء الاستمارة  بالظغط هنا",
+                    "لطلب الخدمة يرجى ملئ الاستمارة بالضغط هنا",
                     style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                )
+                ),
               ],
             ),
           ),

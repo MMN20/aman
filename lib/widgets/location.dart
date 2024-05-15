@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LocationScreen extends StatelessWidget {
   const LocationScreen({super.key});
@@ -52,11 +53,17 @@ class LocationScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 10),
-              const Text(
-                'للاتصال على الرقم : +1234567890',
-                style: TextStyle(
-                  fontSize: 18,
-                  color: Colors.blue, // Adjust color as needed
+              InkWell(
+                onTap: () async {
+                  var uri = Uri.parse("tel:07815551133");
+                  await launchUrl(uri);
+                },
+                child: const Text(
+                  'للاتصال على الرقم : 9647815551133+',
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.blue, // Adjust color as needed
+                  ),
                 ),
               ),
             ],

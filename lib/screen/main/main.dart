@@ -1,5 +1,9 @@
 import 'package:aman/provider/app.dart';
 import 'package:aman/screen/main/calim_card/claim_and_service.dart';
+import 'package:aman/screen/services_details/banking_services_details_page.dart';
+import 'package:aman/screen/services_details/electronic_wallet_details.dart';
+import 'package:aman/screen/services_details/insu_services_details_page.dart';
+import 'package:aman/screen/services_details/law_services_details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
@@ -207,22 +211,50 @@ class _MainState extends State<Main> {
                   ClaimAndServiceCard(
                     asset: 'assets/icon/insurance.png',
                     text: 'خدمات التأمين',
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) {
+                          return const InsuServicesDetailsPage();
+                        }),
+                      );
+                    },
                   ),
                   ClaimAndServiceCard(
                     asset: 'assets/icon/law.png',
                     text: 'خدمات قانونية',
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) {
+                          return const LawServicesDetailsPage();
+                        }),
+                      );
+                    },
                   ),
                   ClaimAndServiceCard(
                     asset: 'assets/icon/bank.png',
                     text: 'خدمات مصرفية',
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) {
+                          return const BankingServicesDetailsPage();
+                        }),
+                      );
+                    },
                   ),
                   ClaimAndServiceCard(
                     asset: 'assets/icon/wallet.png',
                     text: 'المحفظة الالكترونية',
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) {
+                          return const ElectronicServicesDetailsPage();
+                        }),
+                      );
+                    },
                   ),
                 ],
               ),

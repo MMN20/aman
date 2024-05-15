@@ -48,7 +48,7 @@ class BankReq2 extends StatelessWidget {
                               CustomDropdown(
                                 items: controller.claimTypes,
                                 hintText: "اختر نوع المطالبة",
-                                onChanged: (s) {},
+                                onChanged: controller.setSelectedClaimType,
                                 selectedValue: controller.selectedClaimType,
                               ),
 
@@ -105,7 +105,7 @@ class BankReq2 extends StatelessWidget {
                               const SizedBox(height: 5),
                               CustomDropdownType<SmallCus>(
                                 items: controller.customers,
-                                hintText: "الكفيل",
+                                hintText: "اختر اسم الكفيل",
                                 onChanged: controller.setSelectedCus,
                                 selectedValue: controller.selectedCus,
                               ),
@@ -117,31 +117,32 @@ class BankReq2 extends StatelessWidget {
                               ),
                               const SizedBox(height: 5),
 
-                              // //! الاستمارة
-                              // Center(
-                              //   child: GeneralButton(
-                              //       onPressed: () {
-                              //         controller.pickFile();
-                              //       },
-                              //       child: const Row(
-                              //         mainAxisSize: MainAxisSize.min,
-                              //         mainAxisAlignment: MainAxisAlignment.center,
-                              //         children: [
-                              //           Text("الاستمارة"),
-                              //           SizedBox(width: 5),
-                              //           Icon(Icons.upload)
-                              //         ],
-                              //       )),
-                              // ),
-                              // if (controller.formFile != null) ...[
-                              //   const SizedBox(height: 5),
-                              //   Center(
-                              //     child: Image.file(
-                              //       controller.formFile!,
-                              //       height: 300,
-                              //     ),
-                              //   ),
-                              // ],
+                              //! الاستمارة
+                              Center(
+                                child: GeneralButton(
+                                    onPressed: () {
+                                      controller.pickFile();
+                                    },
+                                    child: const Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text("الاستمارة"),
+                                        SizedBox(width: 5),
+                                        Icon(Icons.upload)
+                                      ],
+                                    )),
+                              ),
+                              if (controller.formFile != null) ...[
+                                const SizedBox(height: 5),
+                                Center(
+                                  child: Image.file(
+                                    controller.formFile!,
+                                    height: 300,
+                                  ),
+                                ),
+                              ],
                               const SizedBox(height: 10),
 
                               //! المرفقات

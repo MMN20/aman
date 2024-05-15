@@ -1,8 +1,7 @@
+import 'package:aman/screen/claim_status/claims_status_pages/bank_service_status_page.dart';
 import 'package:aman/screen/claim_status/claims_status_pages/law_services_status_page.dart';
+import 'package:aman/screen/claim_status/claims_status_pages/medical_service_status_page.dart';
 import 'package:aman/screen/main/calim_card/claim_and_service.dart';
-import 'package:aman/screen/service/component/bank.dart';
-import 'package:aman/screen/service/component/insu.dart';
-import 'package:aman/screen/service/component/low.dart';
 import 'package:flutter/material.dart';
 
 class ClaimStatusMainPage extends StatelessWidget {
@@ -31,7 +30,7 @@ class ClaimStatusMainPage extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const ClaimsStatusPage(),
+                        builder: (context) => const LawClaimsStatusPage(),
                       ),
                     );
                   },
@@ -47,7 +46,7 @@ class ClaimStatusMainPage extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const ClaimsStatusPage(),
+                        builder: (context) => const BankServiceStatusPage(),
                       ),
                     );
                   },
@@ -63,7 +62,7 @@ class ClaimStatusMainPage extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const ClaimsStatusPage(),
+                        builder: (context) => const MedicalServiceStatusPage(),
                       ),
                     );
                   },

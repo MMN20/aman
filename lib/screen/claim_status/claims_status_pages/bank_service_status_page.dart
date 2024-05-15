@@ -1,19 +1,20 @@
-import 'package:aman/controllers/req_status/law_claims_status_controller.dart';
+import 'package:aman/controllers/req_status/bank_req_status_controller.dart';
+import 'package:aman/models/bank_service.dart';
 import 'package:aman/models/law_claim.dart';
 import 'package:aman/screen/claim_status/status_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class LawClaimsStatusPage extends StatelessWidget {
-  const LawClaimsStatusPage({super.key});
+class BankServiceStatusPage extends StatelessWidget {
+  const BankServiceStatusPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(LawClaimsStatusController());
+    final controller = Get.put(BankServiceController());
     controller.context = context;
     return WillPopScope(
       onWillPop: () {
-        Get.delete<LawClaimsStatusController>();
+        Get.delete<BankServiceController>();
         return Future.value(true);
       },
       child: GetBuilder(
@@ -21,7 +22,7 @@ class LawClaimsStatusPage extends StatelessWidget {
           builder: (context) {
             return Scaffold(
               appBar: AppBar(
-                title: const Text("حالة الطلبات القانونية"),
+                title: const Text("حالة الطلبات المصرفية"),
               ),
               body: controller.isFirstLoading
                   ? const Center(
@@ -31,15 +32,16 @@ class LawClaimsStatusPage extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: ListView.builder(
                         controller: controller.scrollController,
-                        itemCount: controller.lawClaims.length,
+                        itemCount: controller.bankStatus.length,
                         itemBuilder: (context, index) {
-                          LawClaim lawClaim = controller.lawClaims[index];
+                          BankServiceStatus bankServiceStatus =
+                              controller.bankStatus[index];
                           return Column(
                             children: [
                               ReqStatusCard(
                                   status:
-                                      "status: ${lawClaim.status.toString()}"),
-                              if (index + 1 == controller.lawClaims.length &&
+                                      "status: ${bankServiceStatus.status}"),
+                              if (index + 1 == controller.bankStatus.length &&
                                   controller.isLoading) ...[
                                 const CircularProgressIndicator(),
                                 const SizedBox(height: 15),

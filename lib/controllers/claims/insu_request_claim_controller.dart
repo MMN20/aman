@@ -11,9 +11,11 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+// this is for the main page of Rnsurance Requests
+
 class InsuReqClaimController extends GetxController {
   late BuildContext context;
-  bool isLoading = true;
+  bool isLoading = false;
 
   TextEditingController claimDescController = TextEditingController();
   TextEditingController priceController = TextEditingController();
@@ -32,9 +34,9 @@ class InsuReqClaimController extends GetxController {
       return false;
     }
 
-    if (selectedCus == null) {
-      return false;
-    }
+    // if (selectedCus == null) {
+    //   return false;
+    // }
 
     if (files == null) {
       return false;
@@ -43,16 +45,24 @@ class InsuReqClaimController extends GetxController {
     return true;
   }
 
-  // الكفلاء
-  List<SmallCus> customers = [];
-  SmallCus? selectedCus;
+  //! this will be fetched from an api
+  List<String> claimTypes = ["فتح حساب بنكي", "الحصول على قرض", "اخرى"];
+
+  String? selectedClaimType;
+  void setSelectedClaimType(String? newVal) {
+    selectedClaimType = newVal;
+  }
+
+  //  الكفلاء
+  // List<SmallCus> customers = [];
+  // SmallCus? selectedCus;
 
   Future<Map<String, String>> getPostData() async {
     String desc = claimDescController.text;
     String price = priceController.text;
     // الكفيل
-    String selectCustomer = selectedCus!.id.toString();
-    String date = pickedDate.toString();
+    // String selectCustomer = selectedCus!.id.toString();
+    // String date = pickedDate.toString();
 
     // for current user id
 
@@ -60,29 +70,29 @@ class InsuReqClaimController extends GetxController {
 
     var userdata = cusFromJson(sharePref.getString('cuslogin')!);
     print("current user ${userdata.cus.id}");
-    print("Kafeel $selectCustomer");
+    // print("Kafeel $selectCustomer");
 
     return {
       'cus_id': userdata.cus.id.toString(),
       'price': price,
       'details': desc,
-      'union_id': selectCustomer
+      'union_id': userdata.cus.unionId,
     };
   }
 
-  Future<void> getAllCustomers() async {
-    Api api = Api();
-    dynamic response = await api.getData("app_cus");
-    List responseData = json.decode(response.body);
-    customers = responseData.map((e) => SmallCus.fromJson(e)).toList();
-  }
+  // Future<void> getAllCustomers() async {
+  //   Api api = Api();
+  //   dynamic response = await api.getData("app_cus");
+  //   List responseData = json.decode(response.body);
+  //   customers = responseData.map((e) => SmallCus.fromJson(e)).toList();
+  // }
 
-  void initData() async {
-    await getAllCustomers();
-    isLoading = false;
+  // void initData() async {
+  //   await getAllCustomers();
+  //   isLoading = false;
 
-    update();
-  }
+  //   update();
+  // }
 
   List<File>? files;
   DateTime? pickedDate;
@@ -105,12 +115,12 @@ class InsuReqClaimController extends GetxController {
     }
   }
 
-  void setSelectedCus(SmallCus? cus) {
-    selectedCus = cus;
-    print(selectedCus!.id);
-    print(selectedCus!.name);
-    update();
-  }
+  // void setSelectedCus(SmallCus? cus) {
+  //   selectedCus = cus;
+  //   print(selectedCus!.id);
+  //   print(selectedCus!.name);
+  //   update();
+  // }
 
   // المرفقات
   void pickFiles() async {
@@ -138,6 +148,7 @@ class InsuReqClaimController extends GetxController {
           content: Text("يرجى ملئ جميع الحقول"),
         ),
       );
+      return;
     }
 
     isLoading = true;
@@ -171,7 +182,7 @@ class InsuReqClaimController extends GetxController {
 
   @override
   void onInit() {
-    initData();
+    // initData();
     super.onInit();
   }
 

@@ -1,4 +1,5 @@
 import 'package:aman/provider/app.dart';
+import 'package:aman/screen/Balance/balance_page.dart';
 import 'package:aman/screen/claim_status/claim_status_main_page.dart';
 import 'package:aman/widgets/general_button.dart';
 import 'package:flutter/material.dart';
@@ -46,23 +47,41 @@ class _ProfileState extends State<Profile> {
               InfoCard(
                 title: 'اسم الام',
                 value: app.userdata.cus.mother,
-                icon: Icons.location_on,
+                icon: Icons.person,
               ),
               InfoCard(
                 title: 'الجهة',
                 value: app.userdata.cus.union.name,
-                icon: Icons.location_on,
+                icon: Icons.location_city,
               ),
               InfoCard(
                 title: 'المهنة',
                 value: app.userdata.cus.job,
-                icon: Icons.location_on,
+                icon: Icons.work_outline_rounded,
               ),
               InfoCard(
                 title: 'كود الاحالة',
                 value: app.userdata.cus.reverralUser,
-                icon: Icons.location_on,
+                icon: Icons.abc,
               ),
+              //! المحفظة
+              GeneralButton(
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return const BalancePage();
+                  }));
+                },
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("المحفظة"),
+                    SizedBox(width: 5),
+                    Icon(Icons.credit_card_rounded),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 16),
+              //! حالة المطالبات
               GeneralButton(
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -79,6 +98,7 @@ class _ProfileState extends State<Profile> {
                 ),
               ),
               const SizedBox(height: 20),
+              //! تسجيل الخروج
               GeneralButton(
                 onPressed: () {
                   app.logout(context);

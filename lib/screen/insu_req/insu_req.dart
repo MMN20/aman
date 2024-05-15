@@ -4,6 +4,7 @@ import 'package:aman/models/small_cus.dart';
 import 'package:aman/screen/bank_req/widgets/custom_text.dart';
 import 'package:aman/screen/insu_req/widgets/date_picker.dart';
 import 'package:aman/widgets/custom_drop_down_type.dart';
+import 'package:aman/widgets/dropdown.dart';
 import 'package:aman/widgets/general_button.dart';
 import 'package:aman/widgets/text_field.dart';
 import 'package:flutter/material.dart';
@@ -40,6 +41,18 @@ class InsuReqPage extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              //! نوع المطالبة
+                              const CustomText(
+                                text: "نوع المطالبة",
+                              ),
+                              const SizedBox(height: 5),
+                              CustomDropdown(
+                                items: controller.claimTypes,
+                                hintText: "اختر نوع المطالبة",
+                                onChanged: controller.setSelectedClaimType,
+                                selectedValue: controller.selectedClaimType,
+                              ),
+
                               //! تفاصيل المطالبة
                               const SizedBox(height: 15),
                               const CustomText(
@@ -83,17 +96,17 @@ class InsuReqPage extends StatelessWidget {
                               ),
 
                               //! اسم الكفيل
-                              const SizedBox(height: 15),
-                              const CustomText(
-                                text: "اسم الكفيل",
-                              ),
-                              const SizedBox(height: 5),
-                              CustomDropdownType<SmallCus>(
-                                items: controller.customers,
-                                hintText: "الكفيل",
-                                onChanged: controller.setSelectedCus,
-                                selectedValue: controller.selectedCus,
-                              ),
+                              // const SizedBox(height: 15),
+                              // const CustomText(
+                              //   text: "اسم الكفيل",
+                              // ),
+                              // const SizedBox(height: 5),
+                              // CustomDropdownType<SmallCus>(
+                              //   items: controller.customers,
+                              //   hintText: "الكفيل",
+                              //   onChanged: controller.setSelectedCus,
+                              //   selectedValue: controller.selectedCus,
+                              // ),
 
                               //! الملفات
                               const SizedBox(height: 15),
