@@ -23,32 +23,45 @@ class ClaimAndServiceCard extends StatelessWidget {
         child: Card(
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15),
-                side: BorderSide(color: kPrimarycolor)),
+                side: const BorderSide(color: kPrimarycolor)),
             color: Colors.white,
             clipBehavior: Clip.none,
             elevation: 10,
             // shadowColor: Colors.black.withOpacity(0.5),
-            surfaceTintColor: Color.fromARGB(255, 155, 180, 185),
-            child: SizedBox(
-              width: 150,
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const SizedBox(height: 20),
-                    Image.asset(
-                      asset,
-                      // 'assets/icon/law.png',
-                      height: 70,
-                      fit: BoxFit.fill,
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                      text,
-                      style: const TextStyle(
-                          fontSize: 14, fontWeight: FontWeight.bold),
-                    ),
+            surfaceTintColor: const Color.fromARGB(255, 155, 180, 185),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                color: Colors.white,
+                border: Border.all(color: kPrimarycolor),
+                gradient: LinearGradient(
+                  colors: [
+                    Colors.indigo.withOpacity(0.2),
+                    Colors.tealAccent.shade700.withOpacity(0.1),
                   ],
+                ),
+              ),
+              child: SizedBox(
+                width: 150,
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const SizedBox(height: 20),
+                      Image.asset(
+                        asset,
+                        // 'assets/icon/law.png',
+                        height: 70,
+                        fit: BoxFit.fill,
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        text,
+                        style: const TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             )),

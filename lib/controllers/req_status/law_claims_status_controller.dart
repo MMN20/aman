@@ -3,6 +3,7 @@ import 'package:aman/api/api.dart';
 import 'package:aman/api/api_links.dart';
 import 'package:aman/models/cus.dart';
 import 'package:aman/models/law_claim.dart';
+import 'package:aman/screen/claim_status/claim_status_details_page/law_service_status_details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -92,6 +93,26 @@ class LawClaimsStatusController extends GetxController {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       scrollController.addListener(onReachesEnd);
     });
+  }
+
+  void goToDetailsPage(LawClaim lawClaim) {
+    Navigator.push(context, MaterialPageRoute(
+      builder: (context) {
+        return LawReqDetailsPage(
+          lawClaim: lawClaim,
+        );
+      },
+    ));
+  }
+
+  void disposeAllControllers() {
+    scrollController.dispose();
+  }
+
+  @override
+  void onClose() {
+    disposeAllControllers();
+    super.onClose();
   }
 
   @override

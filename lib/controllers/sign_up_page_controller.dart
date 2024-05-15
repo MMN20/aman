@@ -11,12 +11,10 @@ import 'package:http/http.dart' as http;
 
 class SignUpPageController extends GetxController {
   //! page1 validation
-  TextEditingController nameController = TextEditingController(text: "ششش");
-  TextEditingController phoneNumberController =
-      TextEditingController(text: "07501234567");
+  TextEditingController nameController = TextEditingController();
+  TextEditingController phoneNumberController = TextEditingController();
   Govs? selectedGovernorate;
-  TextEditingController nearestPointController =
-      TextEditingController(text: "ششش");
+  TextEditingController nearestPointController = TextEditingController();
   GlobalKey<FormState> page1Key = GlobalKey<FormState>();
 
   // give it the phone number and it will return it with the key
@@ -37,12 +35,10 @@ class SignUpPageController extends GetxController {
   }
 
   //! page2 validation
-  TextEditingController jobController = TextEditingController(text: "ششش");
-  TextEditingController jobYearsController = TextEditingController(text: "12");
-  TextEditingController jobLocationController =
-      TextEditingController(text: "ششش");
-  TextEditingController jobProviderNameController =
-      TextEditingController(text: "ششش");
+  TextEditingController jobController = TextEditingController();
+  TextEditingController jobYearsController = TextEditingController();
+  TextEditingController jobLocationController = TextEditingController();
+  TextEditingController jobProviderNameController = TextEditingController();
   String? selectedSector;
   GlobalKey<FormState> page2Key = GlobalKey<FormState>();
 
@@ -206,6 +202,7 @@ class SignUpPageController extends GetxController {
       currentPage = newPage;
       pageController.animateToPage(currentPage,
           duration: const Duration(milliseconds: 200), curve: Curves.bounceIn);
+
       update();
     }
   }

@@ -38,6 +38,12 @@ class MedicalServiceStatusPage extends StatelessWidget {
                           return Column(
                             children: [
                               ReqStatusCard(
+                                  onTap: () {
+                                    controller
+                                        .goToDetailsPage(medicalServiceStatus);
+                                  },
+                                  details: medicalServiceStatus.details,
+                                  reqID: medicalServiceStatus.id,
                                   status: "status: ${medicalServiceStatus.id}"),
                               if (index + 1 == controller.bankStatus.length &&
                                   controller.isLoading) ...[

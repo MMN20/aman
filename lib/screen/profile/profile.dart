@@ -113,6 +113,7 @@ class _ProfileState extends State<Profile> {
                 ),
               ),
               // _buildActionButtons(context, app),
+              const SizedBox(height: 100)
             ],
           ),
         ),

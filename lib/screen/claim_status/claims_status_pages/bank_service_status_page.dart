@@ -12,47 +12,46 @@ class BankServiceStatusPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(BankServiceController());
     controller.context = context;
-    return WillPopScope(
-      onWillPop: () {
-        Get.delete<BankServiceController>();
-        return Future.value(true);
-      },
-      child: GetBuilder(
-          init: controller,
-          builder: (context) {
-            return Scaffold(
-              appBar: AppBar(
-                title: const Text("حالة الطلبات المصرفية"),
-              ),
-              body: controller.isFirstLoading
-                  ? const Center(
-                      child: CircularProgressIndicator(),
-                    )
-                  : Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: ListView.builder(
-                        controller: controller.scrollController,
-                        itemCount: controller.bankStatus.length,
-                        itemBuilder: (context, index) {
-                          BankServiceStatus bankServiceStatus =
-                              controller.bankStatus[index];
-                          return Column(
-                            children: [
-                              ReqStatusCard(
-                                  status:
-                                      "status: ${bankServiceStatus.status}"),
-                              if (index + 1 == controller.bankStatus.length &&
-                                  controller.isLoading) ...[
-                                const CircularProgressIndicator(),
-                                const SizedBox(height: 15),
-                              ]
-                            ],
-                          );
-                        },
-                      ),
+    return GetBuilder(
+        init: controller,
+        builder: (context) {
+          return Scaffold(
+            appBar: AppBar(
+              title: const Text("حالة الطلبات المصرفية"),
+            ),
+            body: controller.isFirstLoading
+                ? const Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: ListView.builder(
+                      controller: controller.scrollController,
+                      itemCount: controller.bankStatus.length,
+                      itemBuilder: (context, index) {
+                        BankServiceStatus bankServiceStatus =
+                            controller.bankStatus[index];
+                        return Column(
+                          children: [
+                            ReqStatusCard(
+                              onTap: () {
+                                controller.goToDetailsPage(bankServiceStatus);
+                              },
+                              details: bankServiceStatus.details,
+                              status: bankServiceStatus.status,
+                              reqID: bankServiceStatus.id,
+                            ),
+                            if (index + 1 == controller.bankStatus.length &&
+                                controller.isLoading) ...[
+                              const CircularProgressIndicator(),
+                              const SizedBox(height: 15),
+                            ]
+                          ],
+                        );
+                      },
                     ),
-            );
-          }),
-    );
+                  ),
+          );
+        });
   }
 }

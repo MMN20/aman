@@ -21,6 +21,8 @@ void main() {
         debugShowCheckedModeBanner: false,
         title: '',
         theme: ThemeData(
+            progressIndicatorTheme:
+                const ProgressIndicatorThemeData(color: kPrimarycolor),
             appBarTheme: const AppBarTheme(
                 backgroundColor: kPrimarycolor, centerTitle: true),
             fontFamily: 'Almarai',

@@ -41,20 +41,20 @@ class InsuReqPage extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              //! نوع المطالبة
-                              const CustomText(
-                                text: "نوع المطالبة",
-                              ),
-                              const SizedBox(height: 5),
-                              CustomDropdown(
-                                items: controller.claimTypes,
-                                hintText: "اختر نوع المطالبة",
-                                onChanged: controller.setSelectedClaimType,
-                                selectedValue: controller.selectedClaimType,
-                              ),
+                              // //! نوع المطالبة
+                              // const CustomText(
+                              //   text: "نوع المطالبة",
+                              // ),
+                              // const SizedBox(height: 5),
+                              // CustomDropdown(
+                              //   items: controller.claimTypes,
+                              //   hintText: "اختر نوع المطالبة",
+                              //   onChanged: controller.setSelectedClaimType,
+                              //   selectedValue: controller.selectedClaimType,
+                              // ),
 
                               //! تفاصيل المطالبة
-                              const SizedBox(height: 15),
+                              // const SizedBox(height: 15),
                               const CustomText(
                                 text: "تفاصيل المطالبة",
                               ),
@@ -85,15 +85,15 @@ class InsuReqPage extends StatelessWidget {
                               ),
 
                               //! التاريخ
-                              const SizedBox(height: 15),
-                              const CustomText(
-                                text: "التاريخ",
-                              ),
-                              const SizedBox(height: 5),
-                              CustomDatePicker(
-                                dateTime: controller.pickedDate,
-                                onTap: controller.pickDate,
-                              ),
+                              // const SizedBox(height: 15),
+                              // const CustomText(
+                              //   text: "التاريخ",
+                              // ),
+                              // const SizedBox(height: 5),
+                              // CustomDatePicker(
+                              //   dateTime: controller.pickedDate,
+                              //   onTap: controller.pickDate,
+                              // ),
 
                               //! اسم الكفيل
                               // const SizedBox(height: 15),

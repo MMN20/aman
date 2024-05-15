@@ -111,6 +111,10 @@ class LawRequController extends GetxController {
     );
   }
 
+  void disposeAllControllers() {
+    reqDescController.dispose();
+  }
+
   @override
   void onInit() {
     intiData();

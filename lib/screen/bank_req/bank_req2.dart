@@ -1,7 +1,9 @@
-import 'package:aman/controllers/claims/bank_request_claim_controller.dart';
+import 'package:aman/controllers/claims/bank_request_controller.dart';
 import 'package:aman/functions/validator.dart';
 import 'package:aman/models/small_cus.dart';
 import 'package:aman/screen/bank_req/widgets/custom_text.dart';
+import 'package:aman/screen/bank_req/widgets/kafeel_bottom_sheet.dart';
+import 'package:aman/screen/bank_req/widgets/kafeel_picker.dart';
 import 'package:aman/widgets/custom_drop_down_type.dart';
 import 'package:aman/widgets/dropdown.dart';
 import 'package:aman/widgets/general_button.dart';
@@ -22,7 +24,7 @@ class BankReq2 extends StatelessWidget {
       ),
       body: WillPopScope(
         onWillPop: () {
-          Get.deleteAll();
+          // Get.deleteAll();
           return Future.value(true);
         },
         child: GetBuilder(
@@ -32,9 +34,9 @@ class BankReq2 extends StatelessWidget {
                   ? const Center(
                       child: CircularProgressIndicator(),
                     )
-                  : Form(
-                      key: controller.globalKey,
-                      child: SingleChildScrollView(
+                  : SingleChildScrollView(
+                      child: Form(
+                        key: controller.globalKey,
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Column(
@@ -103,12 +105,46 @@ class BankReq2 extends StatelessWidget {
                                 text: "اسم الكفيل",
                               ),
                               const SizedBox(height: 5),
-                              CustomDropdownType<SmallCus>(
-                                items: controller.customers,
-                                hintText: "اختر اسم الكفيل",
-                                onChanged: controller.setSelectedCus,
-                                selectedValue: controller.selectedCus,
+                              Builder(
+                                builder: (context) {
+                                  return KafeelPicker(
+                                    selectedKafeel:
+                                        controller.selectedCus?.name,
+                                    onTap: () {
+                                      showBottomSheet(
+                                        context: context,
+                                        builder: (context) {
+                                          controller.resetBottomSheetSearch();
+                                          return GetBuilder(
+                                              id: "search",
+                                              init: controller,
+                                              builder: (controller) {
+                                                return KafeelBottomSheet(
+                                                  customers: controller
+                                                      .searchedCustomers,
+                                                  onChanged: controller
+                                                      .searchForKafeel,
+                                                  onKafeelTAp: (kafeel) {
+                                                    controller
+                                                        .setSelectedCus(kafeel);
+                                                    Navigator.pop(context);
+                                                  },
+                                                );
+                                              });
+                                        },
+                                      );
+                                    },
+                                  );
+                                },
                               ),
+
+                              // const SizedBox(height: 10),
+                              // CustomDropdownType<SmallCus>(
+                              //   items: controller.customers,
+                              //   hintText: "اختر اسم الكفيل",
+                              //   onChanged: controller.setSelectedCus,
+                              //   selectedValue: controller.selectedCus,
+                              // ),
 
                               //! الملفات
                               const SizedBox(height: 15),
@@ -168,9 +204,14 @@ class BankReq2 extends StatelessWidget {
                                   child: Column(
                                     children: List.generate(
                                       controller.files!.length,
-                                      (index) => Image.file(
-                                        controller.files![index],
-                                        height: 300,
+                                      (index) => Column(
+                                        children: [
+                                          Image.file(
+                                            controller.files![index],
+                                            height: 300,
+                                          ),
+                                          const SizedBox(height: 5)
+                                        ],
                                       ),
                                     ),
                                   ),

@@ -4,6 +4,7 @@ import 'package:aman/api/api_links.dart';
 import 'package:aman/models/bank_service.dart';
 import 'package:aman/models/cus.dart';
 import 'package:aman/models/law_claim.dart';
+import 'package:aman/screen/claim_status/claim_status_details_page/bank_req_details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -87,12 +88,30 @@ class BankServiceController extends GetxController {
     }
   }
 
+  void goToDetailsPage(BankServiceStatus bankServiceStatus) {
+    Navigator.push(context, MaterialPageRoute(
+      builder: (context) {
+        return BankReqDetailsPage(bankServiceStatus: bankServiceStatus);
+      },
+    ));
+  }
+
   void initData() {
     isFirstLoading = true;
     getClaims();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       scrollController.addListener(onReachesEnd);
     });
+  }
+
+  void disposeAllControllers() {
+    scrollController.dispose();
+  }
+
+  @override
+  void onClose() {
+    disposeAllControllers();
+    super.onClose();
   }
 
   @override

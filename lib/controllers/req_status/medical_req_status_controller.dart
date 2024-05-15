@@ -3,6 +3,7 @@ import 'package:aman/api/api.dart';
 import 'package:aman/api/api_links.dart';
 import 'package:aman/models/cus.dart';
 import 'package:aman/models/medical_service.dart';
+import 'package:aman/screen/claim_status/claim_status_details_page/medical_req_details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -92,6 +93,25 @@ class MedicalServiceController extends GetxController {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       scrollController.addListener(onReachesEnd);
     });
+  }
+
+  void goToDetailsPage(MedicalServiceStatus medicalServiceStatus) {
+    Navigator.push(context, MaterialPageRoute(
+      builder: (context) {
+        return MedicalReqDetailsPage(
+            medicalServiceStatus: medicalServiceStatus);
+      },
+    ));
+  }
+
+  void disposeAllControllers() {
+    scrollController.dispose();
+  }
+
+  @override
+  void onClose() {
+    disposeAllControllers();
+    super.onClose();
   }
 
   @override

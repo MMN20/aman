@@ -1,4 +1,4 @@
-
+import 'package:aman/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import '../../const.dart';
 import '../main/main.dart';
@@ -13,13 +13,14 @@ class ServiceScreen extends StatefulWidget {
 
 class _ServiceScreenState extends State<ServiceScreen> {
   late int i;
-  
+
   @override
   void initState() {
     super.initState();
     i = 0;
   }
-  List screen = [const Main(),const Profile()];
+
+  List screen = [const Main(), const Profile()];
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -33,50 +34,73 @@ class _ServiceScreenState extends State<ServiceScreen> {
         textDirection: TextDirection.rtl,
         child: Scaffold(
           backgroundColor: Colors.transparent,
-          body: screen[i],
-          bottomNavigationBar: BottomNavigationBar(
-            currentIndex: i,
-            onTap: (value) {
-              setState(() {
-                i = value;
-              });
-            },
-            items: const [
-              BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.home,
-                  color: kPrimarycolor,
+          body: Stack(
+            children: [
+              //! showed page
+              screen[i],
+
+              //! Custom app bar
+              Positioned(
+                left: 30,
+                right: 30,
+                bottom: 30,
+                child: CustomAppBar(
+                  i: i,
+                  onHomeTap: () {
+                    i = 0;
+                    setState(() {});
+                  },
+                  onProfileTap: () {
+                    i = 1;
+                    setState(() {});
+                  },
                 ),
-                activeIcon: Icon(
-                  Icons.home,
-                  color: Colors.black,
-                ),
-                label: "",
-              ),
-              // BottomNavigationBarItem(
-              //   icon: Icon(
-              //     Icons.list_alt_rounded,
-              //     color: kPrimarycolor,
-              //   ),
-              //   activeIcon: Icon(
-              //     Icons.list_alt_rounded,
-              //     color: Colors.black,
-              //   ),
-              //   label: '',
-              // ),
-              BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.person,
-                  color: kPrimarycolor,
-                ),
-                activeIcon: Icon(
-                  Icons.person,
-                  color: Colors.black,
-                ),
-                label: '',
-              ),
+              )
             ],
           ),
+          // bottomNavigationBar: BottomNavigationBar(
+          //   currentIndex: i,
+          //   onTap: (value) {
+          //     setState(() {
+          //       i = value;
+          //     });
+          //   },
+          //   items: const [
+          //     BottomNavigationBarItem(
+          //       icon: Icon(
+          //         Icons.home,
+          //         color: kPrimarycolor,
+          //       ),
+          //       activeIcon: Icon(
+          //         Icons.home,
+          //         color: Colors.black,
+          //       ),
+          //       label: "",
+          //     ),
+          //     // BottomNavigationBarItem(
+          //     //   icon: Icon(
+          //     //     Icons.list_alt_rounded,
+          //     //     color: kPrimarycolor,
+          //     //   ),
+          //     //   activeIcon: Icon(
+          //     //     Icons.list_alt_rounded,
+          //     //     color: Colors.black,
+          //     //   ),
+          //     //   label: '',
+          //     // ),
+          //     BottomNavigationBarItem(
+          //       icon: Icon(
+          //         Icons.person,
+          //         color: kPrimarycolor,
+          //       ),
+          //       activeIcon: Icon(
+          //         Icons.person,
+          //         color: Colors.black,
+          //       ),
+          //       label: '',
+          //     ),
+          //   ],
+          // ),
         ),
       ),
     );

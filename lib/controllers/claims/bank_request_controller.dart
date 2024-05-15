@@ -18,15 +18,32 @@ class BankReqController extends GetxController {
 
   //! this will be fetched from an api
   List<String> claimTypes = ["فتح حساب بنكي", "الحصول على قرض", "اخرى"];
+  int selectedClaimTypeIndex = 1;
 
   String? selectedClaimType;
   void setSelectedClaimType(String? newVal) {
     selectedClaimType = newVal;
+    if (selectedClaimType != null) {
+      selectedClaimTypeIndex = claimTypes.indexOf(selectedClaimType!) + 1;
+    }
   }
 
   // الكفلاء
   List<SmallCus> customers = [];
   SmallCus? selectedCus;
+
+  // This is for searched kafeel in the bottom sheet
+  late List<SmallCus> searchedCustomers;
+
+  void searchForKafeel(String text) {
+    searchedCustomers =
+        customers.where((element) => element.name.contains(text)).toList();
+    update(['search']);
+  }
+
+  void resetBottomSheetSearch() {
+    searchedCustomers = customers;
+  }
 
   TextEditingController claimDescController = TextEditingController();
   TextEditingController priceController = TextEditingController();
@@ -39,6 +56,7 @@ class BankReqController extends GetxController {
     dynamic response = await api.getData("app_cus");
     List responseData = json.decode(response.body);
     customers = responseData.map((e) => SmallCus.fromJson(e)).toList();
+    searchedCustomers = customers;
   }
 
   // for form validation
@@ -125,7 +143,8 @@ class BankReqController extends GetxController {
       'cost': price,
       'details': desc,
       'kafeel': selectCustomerId,
-      "union_id": userdata.cus.unionId
+      "union_id": userdata.cus.unionId,
+      "req_type": selectedClaimTypeIndex.toString()
     };
   }
 
@@ -176,6 +195,7 @@ class BankReqController extends GetxController {
     if (response == "success") {
       showSnackBar("تم حفظ الطلب بنجاح");
       Navigator.pop(context);
+      isLoading = false;
     } else {
       isLoading = false;
       update();

@@ -37,8 +37,13 @@ class LawClaimsStatusPage extends StatelessWidget {
                           return Column(
                             children: [
                               ReqStatusCard(
-                                  status:
-                                      "status: ${lawClaim.status.toString()}"),
+                                onTap: () {
+                                  controller.goToDetailsPage(lawClaim);
+                                },
+                                reqID: lawClaim.id,
+                                details: lawClaim.reqDesc,
+                                status: lawClaim.status.toString(),
+                              ),
                               if (index + 1 == controller.lawClaims.length &&
                                   controller.isLoading) ...[
                                 const CircularProgressIndicator(),

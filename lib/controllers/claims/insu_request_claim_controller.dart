@@ -30,9 +30,10 @@ class InsuReqClaimController extends GetxController {
       return false;
     }
 
-    if (pickedDate == null) {
-      return false;
-    }
+    //! for the date picker in the UI (commented because I disabled the date picking)
+    // if (pickedDate == null) {
+    //   return false;
+    // }
 
     // if (selectedCus == null) {
     //   return false;
@@ -45,13 +46,13 @@ class InsuReqClaimController extends GetxController {
     return true;
   }
 
-  //! this will be fetched from an api
-  List<String> claimTypes = ["فتح حساب بنكي", "الحصول على قرض", "اخرى"];
+  // //! this will be fetched from an api
+  // List<String> claimTypes = ["فتح حساب بنكي", "الحصول على قرض", "اخرى"];
 
-  String? selectedClaimType;
-  void setSelectedClaimType(String? newVal) {
-    selectedClaimType = newVal;
-  }
+  // String? selectedClaimType;
+  // void setSelectedClaimType(String? newVal) {
+  //   selectedClaimType = newVal;
+  // }
 
   //  الكفلاء
   // List<SmallCus> customers = [];
@@ -95,25 +96,21 @@ class InsuReqClaimController extends GetxController {
   // }
 
   List<File>? files;
-  DateTime? pickedDate;
 
-  void disposeAllControllers() {
-    claimDescController.dispose();
-    priceController.dispose();
-  }
+  //! for the date picker in the UI
+  // DateTime? pickedDate;
+  // void pickDate() async {
+  //   DateTime? date = await showDatePicker(
+  //       context: context,
+  //       firstDate: DateTime.now(),
+  //       lastDate: DateTime(2030),
+  //       textDirection: TextDirection.rtl);
 
-  void pickDate() async {
-    DateTime? date = await showDatePicker(
-        context: context,
-        firstDate: DateTime.now(),
-        lastDate: DateTime(2030),
-        textDirection: TextDirection.rtl);
-
-    if (date != null) {
-      pickedDate = date;
-      update();
-    }
-  }
+  //   if (date != null) {
+  //     pickedDate = date;
+  //     update();
+  //   }
+  // }
 
   // void setSelectedCus(SmallCus? cus) {
   //   selectedCus = cus;
@@ -160,11 +157,11 @@ class InsuReqClaimController extends GetxController {
       ApiLinks.medicalRequestForm,
     );
 
+    isLoading = false;
     if (response == "success") {
       showSnackBar("تم حفظ الطلب بنجاح");
       Navigator.pop(context);
     } else {
-      isLoading = false;
       update();
       showSnackBar("حدث خطأ اثناء عملية الاضافة، يرجى المحاولة لاحقاً");
     }
@@ -184,6 +181,11 @@ class InsuReqClaimController extends GetxController {
   void onInit() {
     // initData();
     super.onInit();
+  }
+
+  void disposeAllControllers() {
+    claimDescController.dispose();
+    priceController.dispose();
   }
 
   @override
