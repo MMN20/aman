@@ -10,7 +10,7 @@ class LocationScreen extends StatelessWidget {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Location'),
+          title: const Text('الموقع'),
         ),
         body: Center(
           child: Column(
