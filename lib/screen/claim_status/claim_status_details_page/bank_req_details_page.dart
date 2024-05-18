@@ -7,7 +7,12 @@ class BankReqDetailsPage extends StatelessWidget {
   final BankServiceStatus bankServiceStatus;
   @override
   Widget build(BuildContext context) {
-    TextStyle textStyle = const TextStyle(fontSize: 20);
+    List<String> statusResponse = [
+      "قيد المراجعة",
+      "تمت الموافقة على المطالبة",
+      "فشلت المطالبة "
+    ];
+    TextStyle textStyle = const TextStyle(fontSize: 18);
     return Scaffold(
       appBar: AppBar(
         title: const Text("تفاصيل المطالبة المصرفية"),
@@ -20,7 +25,15 @@ class BankReqDetailsPage extends StatelessWidget {
               children: [
                 Text("الرقم: ${bankServiceStatus.id}", style: textStyle),
                 const Divider(),
-                Text("الحالة: ${bankServiceStatus.status}", style: textStyle),
+                Text(
+                    "الحالة: ${statusResponse[int.parse(bankServiceStatus.status)]}",
+                    style: textStyle),
+                //! the fail reason should be here
+                if (bankServiceStatus.status == "0") ...[
+                  const Divider(),
+                  Text("سبب الرفض: ${bankServiceStatus.fail}",
+                      style: textStyle),
+                ],
                 const Divider(),
                 Text("التفاصيل: ${bankServiceStatus.details}",
                     style: textStyle),

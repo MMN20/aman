@@ -23,6 +23,12 @@ class MedicalServiceController extends GetxController {
 
   ScrollController scrollController = ScrollController();
 
+  List<String> statusResponse = [
+    "قيد المراجعة",
+    "تمت الموافقة على المطالبة",
+    "فشلت المطالبة "
+  ];
+
   Future<void> getClaims() async {
     late Cus userdata;
     SharedPreferences localStorage = await SharedPreferences.getInstance();

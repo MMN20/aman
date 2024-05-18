@@ -17,6 +17,7 @@ class LawClaim {
   int status;
   DateTime createdAt;
   DateTime updatedAt;
+  dynamic fail;
 
   LawClaim({
     required this.id,
@@ -27,6 +28,7 @@ class LawClaim {
     required this.status,
     required this.createdAt,
     required this.updatedAt,
+    required this.fail,
   });
 
   factory LawClaim.fromJson(Map<String, dynamic> json) => LawClaim(
@@ -38,6 +40,7 @@ class LawClaim {
         status: json["status"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
+        fail: json["fail"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -49,5 +52,6 @@ class LawClaim {
         "status": status,
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
+        "fail": fail,
       };
 }

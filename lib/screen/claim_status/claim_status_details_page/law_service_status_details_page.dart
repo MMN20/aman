@@ -6,7 +6,12 @@ class LawReqDetailsPage extends StatelessWidget {
   final LawClaim lawClaim;
   @override
   Widget build(BuildContext context) {
-    TextStyle textStyle = const TextStyle(fontSize: 20);
+    List<String> statusResponse = [
+      "قيد المراجعة",
+      "تمت الموافقة على المطالبة",
+      "فشلت المطالبة "
+    ];
+    TextStyle textStyle = const TextStyle(fontSize: 18);
     return Scaffold(
       appBar: AppBar(
         title: const Text("تفاصيل المطالبة القانونية"),
@@ -19,7 +24,12 @@ class LawReqDetailsPage extends StatelessWidget {
             children: [
               Text("الرقم: ${lawClaim.id}", style: textStyle),
               const Divider(),
-              Text("الحالة: ${lawClaim.status}", style: textStyle),
+              Text("الحالة: ${statusResponse[lawClaim.status]}",
+                  style: textStyle),
+              if (lawClaim.status == 2) ...[
+                const Divider(),
+                Text("سبب الفشل: ${lawClaim.fail}", style: textStyle),
+              ],
               const Divider(),
               Text("التفاصيل: ${lawClaim.reqDesc}", style: textStyle),
               const Divider(),

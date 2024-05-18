@@ -42,7 +42,8 @@ class LawClaimsStatusPage extends StatelessWidget {
                                 },
                                 reqID: lawClaim.id,
                                 details: lawClaim.reqDesc,
-                                status: lawClaim.status.toString(),
+                                status:
+                                    controller.statusResponse[lawClaim.status],
                               ),
                               if (index + 1 == controller.lawClaims.length &&
                                   controller.isLoading) ...[

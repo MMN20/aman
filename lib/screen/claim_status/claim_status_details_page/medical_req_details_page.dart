@@ -10,7 +10,13 @@ class MedicalReqDetailsPage extends StatelessWidget {
   final MedicalServiceStatus medicalServiceStatus;
   @override
   Widget build(BuildContext context) {
-    TextStyle textStyle = const TextStyle(fontSize: 20);
+    List<String> statusResponse = [
+      "قيد المراجعة",
+      "تمت الموافقة على المطالبة",
+      "فشلت المطالبة "
+    ];
+
+    TextStyle textStyle = const TextStyle(fontSize: 18);
     return Scaffold(
       appBar: AppBar(
         title: const Text("تفاصيل المطالبة الصحية"),
@@ -22,7 +28,13 @@ class MedicalReqDetailsPage extends StatelessWidget {
           children: [
             Text("الرقم: ${medicalServiceStatus.id}", style: textStyle),
             const Divider(),
-            Text("الحالة: ${medicalServiceStatus.status}", style: textStyle),
+            Text(
+                "الحالة: ${statusResponse[int.parse(medicalServiceStatus.status)]}",
+                style: textStyle),
+            if (medicalServiceStatus.status == "2") ...[
+              const Divider(),
+              Text("سبب الرفض: ${medicalServiceStatus.fail}", style: textStyle),
+            ],
             const Divider(),
             Text("التفاصيل: ${medicalServiceStatus.details}", style: textStyle),
             const Divider(),

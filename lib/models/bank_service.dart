@@ -22,6 +22,7 @@ class BankServiceStatus {
   dynamic reqType;
   DateTime createdAt;
   DateTime updatedAt;
+  dynamic fail;
 
   BankServiceStatus({
     required this.id,
@@ -35,6 +36,7 @@ class BankServiceStatus {
     required this.reqType,
     required this.createdAt,
     required this.updatedAt,
+    required this.fail,
   });
 
   factory BankServiceStatus.fromJson(Map<String, dynamic> json) =>
@@ -50,6 +52,7 @@ class BankServiceStatus {
         reqType: json["req_type"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
+        fail: json["fail"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -64,5 +67,6 @@ class BankServiceStatus {
         "req_type": reqType,
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
+        "fail": fail,
       };
 }

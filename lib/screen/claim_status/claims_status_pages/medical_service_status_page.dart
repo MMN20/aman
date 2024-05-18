@@ -44,7 +44,8 @@ class MedicalServiceStatusPage extends StatelessWidget {
                                   },
                                   details: medicalServiceStatus.details,
                                   reqID: medicalServiceStatus.id,
-                                  status: "status: ${medicalServiceStatus.id}"),
+                                  status: controller.statusResponse[
+                                      int.parse(medicalServiceStatus.status)]),
                               if (index + 1 == controller.bankStatus.length &&
                                   controller.isLoading) ...[
                                 const CircularProgressIndicator(),

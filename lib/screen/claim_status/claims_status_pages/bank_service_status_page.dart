@@ -1,6 +1,5 @@
 import 'package:aman/controllers/req_status/bank_req_status_controller.dart';
 import 'package:aman/models/bank_service.dart';
-import 'package:aman/models/law_claim.dart';
 import 'package:aman/screen/claim_status/status_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -38,7 +37,7 @@ class BankServiceStatusPage extends StatelessWidget {
                                 controller.goToDetailsPage(bankServiceStatus);
                               },
                               details: bankServiceStatus.details,
-                              status: bankServiceStatus.status,
+                              status: controller.statusResponse[1],
                               reqID: bankServiceStatus.id,
                             ),
                             if (index + 1 == controller.bankStatus.length &&

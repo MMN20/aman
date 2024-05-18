@@ -14,7 +14,7 @@ class ReqStatusCard extends StatelessWidget {
   final void Function() onTap;
   @override
   Widget build(BuildContext context) {
-    TextStyle textStyle = const TextStyle(fontSize: 20);
+    TextStyle textStyle = const TextStyle(fontSize: 17);
     return InkWell(
       borderRadius: BorderRadius.circular(15),
       onTap: onTap,

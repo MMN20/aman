@@ -3,7 +3,6 @@ import 'package:aman/api/api.dart';
 import 'package:aman/api/api_links.dart';
 import 'package:aman/models/bank_service.dart';
 import 'package:aman/models/cus.dart';
-import 'package:aman/models/law_claim.dart';
 import 'package:aman/screen/claim_status/claim_status_details_page/bank_req_details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -23,6 +22,11 @@ class BankServiceController extends GetxController {
   String? nextUrl;
 
   ScrollController scrollController = ScrollController();
+  List<String> statusResponse = [
+    "قيد المراجعة",
+    "تمت الموافقة على المطالبة",
+    "فشلت المطالبة "
+  ];
 
   Future<void> getClaims() async {
     late Cus userdata;
