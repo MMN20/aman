@@ -113,7 +113,8 @@ class LawReqPage extends StatelessWidget {
                               ),
 
                               //! view docs when available
-                              if (controller.files != null) ...[
+                              if (controller.canShowImages == true &&
+                                  controller.files != null) ...[
                                 const SizedBox(height: 5),
                                 Center(
                                   child: Column(
@@ -127,6 +128,15 @@ class LawReqPage extends StatelessWidget {
                                   ),
                                 ),
                               ],
+
+                              SizedBox(height: 5),
+                              if (controller.canShowImages == false)
+                                const Text(
+                                  "تم تحديد الملفات",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                                ),
 
                               const SizedBox(height: 15),
                               GeneralButton(

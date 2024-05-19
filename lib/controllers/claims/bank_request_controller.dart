@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:aman/api/api.dart';
 import 'package:aman/api/api_links.dart';
+import 'package:aman/functions/is_file_a_image.dart';
 import 'package:aman/models/cus.dart';
 import 'package:aman/models/small_cus.dart';
 import 'package:file_picker/file_picker.dart';
@@ -16,7 +17,7 @@ class BankReqController extends GetxController {
   late BuildContext context;
   bool isLoading = true;
 
-  //! this will be fetched from an api
+  //! نوع المطالبة
   List<String> claimTypes = ["فتح حساب بنكي", "الحصول على قرض", "اخرى"];
   int selectedClaimTypeIndex = 1;
 
@@ -91,6 +92,8 @@ class BankReqController extends GetxController {
     update();
   }
 
+  bool? canShowImages;
+
   // المرفقات
   void pickFiles() async {
     FilePickerResult? pickedFiles = await FilePicker.platform.pickFiles(
@@ -106,9 +109,18 @@ class BankReqController extends GetxController {
           pickedFiles.paths[index]!,
         ),
       );
+      canShowImages = true;
+      for (File f in files!) {
+        if (!isFileAImage(f.path)) {
+          canShowImages = false;
+          break;
+        }
+      }
       update();
     }
   }
+
+  bool? canShowFormImage;
 
   // الاستمارة
   void pickFile() async {
@@ -119,6 +131,11 @@ class BankReqController extends GetxController {
 
     if (pickedFiles != null && pickedFiles.files.isNotEmpty) {
       formFile = File(pickedFiles.files[0].path!);
+      canShowFormImage = true;
+      if (!isFileAImage(formFile!.path)) {
+        canShowFormImage = false;
+      }
+
       update();
     }
   }

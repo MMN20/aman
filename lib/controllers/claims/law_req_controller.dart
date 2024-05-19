@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:aman/api/api.dart';
 import 'package:aman/api/api_links.dart';
+import 'package:aman/functions/is_file_a_image.dart';
 import 'package:aman/models/cus.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -40,6 +41,8 @@ class LawRequController extends GetxController {
     update();
   }
 
+  bool? canShowImages;
+
   // المرفقات
   void pickFiles() async {
     FilePickerResult? pickedFiles = await FilePicker.platform.pickFiles(
@@ -55,6 +58,13 @@ class LawRequController extends GetxController {
           pickedFiles.paths[index]!,
         ),
       );
+      canShowImages = true;
+      for (File f in files!) {
+        if (!isFileAImage(f.path)) {
+          canShowImages = false;
+          break;
+        }
+      }
       update();
     }
   }

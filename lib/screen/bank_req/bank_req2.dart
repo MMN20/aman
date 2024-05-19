@@ -170,12 +170,24 @@ class BankReq2 extends StatelessWidget {
                                       ],
                                     )),
                               ),
-                              if (controller.formFile != null) ...[
+                              if (controller.canShowFormImage == true &&
+                                  controller.formFile != null) ...[
                                 const SizedBox(height: 5),
                                 Center(
                                   child: Image.file(
                                     controller.formFile!,
                                     height: 300,
+                                  ),
+                                ),
+                              ],
+                              if (controller.canShowFormImage == false) ...[
+                                const SizedBox(height: 5),
+                                const Center(
+                                  child: Text(
+                                    "تم تحديد الملفات",
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
                                   ),
                                 ),
                               ],
@@ -198,7 +210,9 @@ class BankReq2 extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              if (controller.files != null) ...[
+
+                              if (controller.canShowImages == true &&
+                                  controller.files != null) ...[
                                 const SizedBox(height: 5),
                                 Center(
                                   child: Column(
@@ -214,6 +228,17 @@ class BankReq2 extends StatelessWidget {
                                         ],
                                       ),
                                     ),
+                                  ),
+                                ),
+                              ],
+                              if (controller.canShowImages == false) ...[
+                                const SizedBox(height: 5),
+                                const Center(
+                                  child: Text(
+                                    "تم تحديد الملفات",
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
                                   ),
                                 ),
                               ],

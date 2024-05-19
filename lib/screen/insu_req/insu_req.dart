@@ -132,7 +132,8 @@ class InsuReqPage extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              if (controller.files != null) ...[
+                              if (controller.canShowImages == true &&
+                                  controller.files != null) ...[
                                 const SizedBox(height: 5),
                                 Center(
                                   child: Column(
@@ -146,6 +147,16 @@ class InsuReqPage extends StatelessWidget {
                                   ),
                                 ),
                               ],
+                              if (controller.canShowImages == false)
+                                const Text(
+                                  "تم تحديد الملفات",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              const SizedBox(
+                                height: 10,
+                              ),
                               const SizedBox(height: 15),
                               GeneralButton(
                                 onPressed: controller.submit,

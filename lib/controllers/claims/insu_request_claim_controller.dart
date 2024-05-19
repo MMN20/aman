@@ -20,6 +20,8 @@ class InsuReqClaimController extends GetxController {
   TextEditingController claimDescController = TextEditingController();
   TextEditingController priceController = TextEditingController();
 
+  bool? canShowImages;
+
   // // المنتسب
   // TextEditingController muntasibController = TextEditingController();
 
@@ -57,6 +59,15 @@ class InsuReqClaimController extends GetxController {
   //  الكفلاء
   // List<SmallCus> customers = [];
   // SmallCus? selectedCus;
+
+  bool isFileAImage(String filePath) {
+    List<String> name = filePath.split(".");
+    String ext = name.last;
+    if (ext != 'jpg' && ext != 'png' && ext != 'jpeg') {
+      return false;
+    }
+    return true;
+  }
 
   Future<Map<String, String>> getPostData() async {
     String desc = claimDescController.text;
@@ -134,6 +145,13 @@ class InsuReqClaimController extends GetxController {
           pickedFiles.paths[index]!,
         ),
       );
+      canShowImages = true;
+      for (File f in files!) {
+        if (!isFileAImage(f.path)) {
+          canShowImages = false;
+          break;
+        }
+      }
       update();
     }
   }
