@@ -37,7 +37,8 @@ class BankServiceStatusPage extends StatelessWidget {
                                 controller.goToDetailsPage(bankServiceStatus);
                               },
                               details: bankServiceStatus.details,
-                              status: controller.statusResponse[1],
+                              status: controller.statusResponse[
+                                  int.parse(bankServiceStatus.status)],
                               reqID: bankServiceStatus.id,
                             ),
                             if (index + 1 == controller.bankStatus.length &&
